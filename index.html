@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cérémonie - Prénom NOM</title>
+  <style>
+    :root {
+      --fond: #f6ead8;
+      --fond-2: #fffaf3;
+      --carte: rgba(255, 255, 255, 0.92);
+      --texte: #211b18;
+      --doux: #6f625b;
+      --accent: #71162f;
+      --accent-2: #a9683c;
+      --ligne: #dcc7ad;
+      --ombre: 0 18px 45px rgba(62, 37, 21, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--texte);
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.75), transparent 34rem),
+        linear-gradient(135deg, var(--fond-2) 0%, var(--fond) 100%);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 42px 18px 54px;
+    }
+
+    header {
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      background: var(--carte);
+      padding: 46px 28px 42px;
+      border: 1px solid rgba(220, 199, 173, 0.95);
+      border-radius: 28px;
+      box-shadow: var(--ombre);
+    }
+
+    header::before,
+    header::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 130px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-2), transparent);
+    }
+
+    header::before { top: 26px; }
+    header::after { bottom: 26px; }
+
+    .sur-titre {
+      margin-bottom: 16px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(42px, 7vw, 66px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .dates {
+      margin-top: 14px;
+      color: var(--accent);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+      letter-spacing: 0.06em;
+    }
+
+    .message {
+      max-width: 620px;
+      margin: 24px auto 0;
+      color: var(--doux);
+      font-size: 16px;
+      font-style: italic;
+    }
+
+    .section-title {
+      margin: 34px 0 18px;
+      color: var(--accent);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 31px;
+      font-weight: 500;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 44px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 18px;
+      bottom: 18px;
+      width: 2px;
+      background: linear-gradient(var(--accent), #b88b69, var(--accent));
+      border-radius: 999px;
+    }
+
+    .event {
+      position: relative;
+      margin: 0 0 22px;
+      padding: 26px;
+      background: var(--carte);
+      border: 1px solid var(--ligne);
+      border-radius: 24px;
+      box-shadow: var(--ombre);
+    }
+
+    .event::before {
+      content: "";
+      position: absolute;
+      left: -37px;
+      top: 31px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--fond-2);
+      border: 5px solid var(--accent);
+      box-shadow: 0 0 0 7px rgba(113, 22, 47, 0.08);
+    }
+
+    .event-grid {
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .moment {
+      color: var(--accent);
+      border-right: 1px solid var(--ligne);
+      padding-right: 22px;
+    }
+
+    .time {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .date {
+      margin-top: 8px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .event h3 {
+      margin: 0 0 16px;
+      font-size: 23px;
+      line-height: 1.15;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .lieu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-weight: 800;
+    }
+
+    .pin {
+      color: var(--accent-2);
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .adresse {
+      margin: 0;
+      color: #352d29;
+      font-size: 16px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    a.button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 43px;
+      padding: 11px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(113, 22, 47, 0.18);
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 750;
+      box-shadow: 0 8px 18px rgba(113, 22, 47, 0.18);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    a.button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(113, 22, 47, 0.23);
+    }
+
+    a.button.secondary {
+      background: #fff7ee;
+      color: var(--accent);
+      border-color: var(--ligne);
+      box-shadow: none;
+    }
+
+    .arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border: 1.5px solid currentColor;
+      border-radius: 6px;
+      transform: rotate(45deg);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .arrow span {
+      transform: rotate(-45deg);
+      display: block;
+      margin-left: 1px;
+    }
+
+    .documents {
+      margin-top: 26px;
+      padding: 26px;
+      background: var(--carte);
+      border: 1px solid var(--ligne);
+      border-radius: 24px;
+      box-shadow: var(--ombre);
+    }
+
+    .documents h2 {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 500;
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      color: var(--doux);
+      font-size: 14px;
+    }
+
+    @media (max-width: 650px) {
+      .page { padding: 22px 12px 40px; }
+      header { padding: 42px 18px 38px; border-radius: 22px; }
+      .timeline { padding-left: 32px; }
+      .timeline::before { left: 11px; }
+      .event { padding: 20px; border-radius: 20px; }
+      .event::before { left: -31px; top: 27px; width: 16px; height: 16px; border-width: 4px; }
+      .event-grid { grid-template-columns: 1fr; gap: 14px; }
+      .moment { border-right: 0; border-bottom: 1px solid var(--ligne); padding: 0 0 14px; }
+      .time { font-size: 30px; }
+      .actions a.button { width: 100%; }
+      .documents { padding: 20px; border-radius: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="sur-titre">Informations cérémonie</div>
+
+      <!-- À MODIFIER : remplacez Prénom NOM par le nom de votre papa -->
+      <h1>Prénom NOM</h1>
+
+      <!-- À MODIFIER : remplacez les années ci-dessous si besoin -->
+      <div class="dates">1964 - 2026</div>
+
+      <p class="message">
+        La famille remercie chaleureusement toutes les personnes qui s'associeront à sa peine.
+      </p>
+    </header>
+
+    <h2 class="section-title">Déroulé de la cérémonie</h2>
+
+    <section class="timeline">
+      <article class="event">
+        <div class="event-grid">
+          <div class="moment">
+            <div class="time">15:30</div>
+            <div class="date">13/07/2026</div>
+          </div>
+          <div>
+            <h3>Présentation en salon</h3>
+            <div class="lieu"><span class="pin">⌖</span> Maison funéraire</div>
+            <p class="adresse">2904 Avenue Kennedy<br>30000 Nîmes</p>
+            <div class="actions">
+              <a class="button" href="https://www.google.com/maps/search/?api=1&query=2904+Avenue+Kennedy+30000+N%C3%AEmes" target="_blank" rel="noopener"><span class="arrow"><span>›</span></span> Itinéraire</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="event">
+        <div class="event-grid">
+          <div class="moment">
+            <div class="time">09:10</div>
+            <div class="date">15/07/2026</div>
+          </div>
+          <div>
+            <h3>Cérémonie religieuse</h3>
+            <div class="lieu"><span class="pin">⌖</span> Maison funéraire</div>
+            <p class="adresse">2904 Avenue Kennedy<br>30000 Nîmes</p>
+            <div class="actions">
+              <a class="button" href="https://www.google.com/maps/search/?api=1&query=2904+Avenue+Kennedy+30000+N%C3%AEmes" target="_blank" rel="noopener"><span class="arrow"><span>›</span></span> Itinéraire</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="event">
+        <div class="event-grid">
+          <div class="moment">
+            <div class="time">11:00</div>
+            <div class="date">15/07/2026</div>
+          </div>
+          <div>
+            <h3>Crémation</h3>
+            <div class="lieu"><span class="pin">⌖</span> Crématorium</div>
+            <p class="adresse">490 rue Max Chabaud<br>30000 Nîmes</p>
+            <div class="actions">
+              <a class="button" href="https://www.google.com/maps/search/?api=1&query=490+rue+Max+Chabaud+30000+N%C3%AEmes" target="_blank" rel="noopener"><span class="arrow"><span>›</span></span> Itinéraire</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="documents">
+      <h2>Document</h2>
+
+      <!--
+        POUR AJOUTER L'ACTE DE DÉCÈS :
+        1. Renommez votre PDF : acte-de-deces.pdf
+        2. Mettez-le dans le même dossier que ce fichier HTML
+        3. Le bouton ci-dessous fonctionnera automatiquement
+      -->
+      <a class="button secondary" href="acte-de-deces.pdf" target="_blank" rel="noopener">📄 Ouvrir l'acte de décès</a>
+    </section>
+
+    <footer>
+      Page d'information familiale · Merci de ne pas diffuser en dehors des proches.
+    </footer>
+  </main>
+</body>
+</html>
